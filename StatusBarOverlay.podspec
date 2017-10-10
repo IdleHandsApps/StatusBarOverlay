@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary          = "A Status Bar Overlay which will automatically display a No Connection message and can display custom messages too"
 
   s.description      = <<-DESC
-                       A Status Bar Overlay which will automatically display a No Connection message and can display custom messages too
+                       A Status Bar Overlay which will automatically display a No Connection message and can display custom messages too, with interactive buttons
                        DESC
 
   s.homepage         = "https://github.com/IdleHandsApps/StatusBarOverlay/"
