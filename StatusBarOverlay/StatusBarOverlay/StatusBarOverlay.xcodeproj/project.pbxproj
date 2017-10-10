@@ -12,7 +12,7 @@
 		4CAB17FE1F8C605E004CF32C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB17FC1F8C605E004CF32C /* Main.storyboard */; };
 		4CAB18001F8C605E004CF32C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB17FF1F8C605E004CF32C /* Assets.xcassets */; };
 		4CAB18031F8C605E004CF32C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB18011F8C605E004CF32C /* LaunchScreen.storyboard */; };
-		4CAB18541F8C61FE004CF32C /* StatusBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB18531F8C617D004CF32C /* StatusBarWindow.swift */; };
+		4CAB18541F8C61FE004CF32C /* StatusBarOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */; };
 		4CAB18551F8C6202004CF32C /* StatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */; };
 		4CAB18561F8C6209004CF32C /* StatusBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */; };
 		56FA26756A923B90E2F5FB80 /* Pods_StatusBarOverlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */; };
@@ -41,7 +41,7 @@
 		4CAB18041F8C605E004CF32C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewController.swift; sourceTree = "<group>"; };
 		4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusBarViewController.xib; sourceTree = "<group>"; };
-		4CAB18531F8C617D004CF32C /* StatusBarWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarWindow.swift; sourceTree = "<group>"; };
+		4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarOverlay.swift; sourceTree = "<group>"; };
 		4CAB18571F8C75F9004CF32C /* StatusBarOverlay.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = StatusBarOverlay.podspec; path = ../../../StatusBarOverlay.podspec; sourceTree = "<group>"; };
 		4CAB18581F8C7603004CF32C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
 		732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusBarOverlay.release.xcconfig"; path = "Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay.release.xcconfig"; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 			children = (
 				4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */,
 				4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */,
-				4CAB18531F8C617D004CF32C /* StatusBarWindow.swift */,
+				4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */,
 			);
 			name = Sources;
 			path = ../../../Sources;
@@ -249,7 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CAB18551F8C6202004CF32C /* StatusBarViewController.swift in Sources */,
-				4CAB18541F8C61FE004CF32C /* StatusBarWindow.swift in Sources */,
+				4CAB18541F8C61FE004CF32C /* StatusBarOverlay.swift in Sources */,
 				4CAB17FB1F8C605E004CF32C /* ViewController.swift in Sources */,
 				4CAB17F91F8C605E004CF32C /* AppDelegate.swift in Sources */,
 			);
