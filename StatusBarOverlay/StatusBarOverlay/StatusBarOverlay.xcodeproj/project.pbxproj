@@ -115,9 +115,9 @@
 		4CAB18501F8C617D004CF32C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */,
 				4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */,
 				4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */,
-				4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */,
 			);
 			name = Sources;
 			path = ../../../Sources;

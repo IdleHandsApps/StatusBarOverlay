@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
 
   s.source_files = "Sources/*.swift"
   s.dependency  'Alamofire', '~> 4.1'
+  s.resource_bundles = { 'StatusBarOverlay' => ["Sources/*.xib"] }
 
   s.framework       = "UIKit"
   s.requires_arc    = true

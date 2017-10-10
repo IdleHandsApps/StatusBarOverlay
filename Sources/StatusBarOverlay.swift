@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class StatusBarOverlay: UIWindow {
+@objc public class StatusBarOverlay: UIWindow {
     
     fileprivate static var shared = StatusBarOverlay()
     fileprivate static var hasMessage: Bool = false
@@ -28,14 +28,21 @@ class StatusBarOverlay: UIWindow {
     public static var prefersStatusBarHidden = false
     public static var preferredStatusBarUpdateAnimation = UIStatusBarAnimation.none
     public static weak var topViewController: UIViewController?
-
+    
     init() {
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64)
         super.init(frame: frame)
         self.initialise()
     }
-
-    required init?(coder aDecoder: NSCoder) {
+    
+    init(host: String) {
+        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 64)
+        super.init(frame: frame)
+        StatusBarOverlay.host = host
+        self.initialise()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialise()
     }
@@ -79,8 +86,8 @@ class StatusBarOverlay: UIWindow {
         self.noConnectionViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
     }
     
-    class func setStatusBarText(_ statusBarText: String?, backgroundColor: UIColor?) {
-
+    public class func setStatusBarText(_ statusBarText: String?, backgroundColor: UIColor?) {
+        
         StatusBarOverlay.shared.noConnectionViewController?.customStatusBarText = statusBarText
         StatusBarOverlay.shared.noConnectionViewController?.statusBarLabel.backgroundColor = backgroundColor != nil ? backgroundColor! : StatusBarOverlay.defaultBackgroundColor
         
@@ -102,13 +109,13 @@ class StatusBarOverlay: UIWindow {
         }
     }
     
-    class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, actionName: String = "", actionHandler: (() -> Void)? = nil, messageHandler: (() -> Void)? = nil) {
+    public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, actionName: String = "", actionHandler: (() -> Void)? = nil, messageHandler: (() -> Void)? = nil) {
         
         StatusBarOverlay.shared.noConnectionViewController?.actionButton.isHidden = actionName.characters.count == 0
         StatusBarOverlay.shared.noConnectionViewController?.actionButton.setTitle(actionName, for: .normal)
         StatusBarOverlay.actionHandler = actionHandler
         StatusBarOverlay.messageHandler = messageHandler
-
+        
         StatusBarOverlay.shared.noConnectionViewController?.messageLabel.text = message
         StatusBarOverlay.hasMessage = message != nil
         
@@ -135,7 +142,7 @@ class StatusBarOverlay: UIWindow {
             }
         }
     }
-
+    
     func updateIsReachable(_ isReachable: Bool, animated: Bool) {
         StatusBarOverlay.isReachable = isReachable
         self.isHidden = false
@@ -208,7 +215,7 @@ class StatusBarOverlay: UIWindow {
         StatusBarOverlay.removeMessage()
     }
     
-    class func removeMessage() {
+    public class func removeMessage() {
         StatusBarOverlay.hasMessage = false
         
         if let reachability = StatusBarOverlay.shared.reachability as NetworkReachabilityManager! {
@@ -240,7 +247,7 @@ class StatusBarOverlay: UIWindow {
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }
     
-    public static func hasNotch() -> Bool {
+    public class func hasNotch() -> Bool {
         var hasNotch = false
         if #available(iOS 11.0, *) {
             if self.shared.safeAreaInsets != UIEdgeInsets.zero {
