@@ -18,19 +18,19 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        StatusBarWindow.topViewController = self // so status bar can be updated at any time
+        StatusBarOverlay.topViewController = self // so status bar can be updated at any time
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return StatusBarWindow.preferredStatusBarStyle
+        return StatusBarOverlay.preferredStatusBarStyle
     }
     
     override var prefersStatusBarHidden: Bool {
-        return StatusBarWindow.prefersStatusBarHidden
+        return StatusBarOverlay.prefersStatusBarHidden
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return StatusBarWindow.preferredStatusBarUpdateAnimation
+        return StatusBarOverlay.preferredStatusBarUpdateAnimation
     }
 
 
