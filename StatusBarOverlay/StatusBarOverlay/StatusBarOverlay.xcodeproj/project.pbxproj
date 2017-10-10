@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4CAB17F91F8C605E004CF32C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB17F81F8C605E004CF32C /* AppDelegate.swift */; };
+		4CAB17FB1F8C605E004CF32C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB17FA1F8C605E004CF32C /* ViewController.swift */; };
+		4CAB17FE1F8C605E004CF32C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB17FC1F8C605E004CF32C /* Main.storyboard */; };
+		4CAB18001F8C605E004CF32C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB17FF1F8C605E004CF32C /* Assets.xcassets */; };
+		4CAB18031F8C605E004CF32C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB18011F8C605E004CF32C /* LaunchScreen.storyboard */; };
+		4CAB18541F8C61FE004CF32C /* StatusBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB18531F8C617D004CF32C /* StatusBarWindow.swift */; };
+		4CAB18551F8C6202004CF32C /* StatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */; };
+		4CAB18561F8C6209004CF32C /* StatusBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */; };
+		56FA26756A923B90E2F5FB80 /* Pods_StatusBarOverlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4CAB183E1F8C6125004CF32C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4CAB17F51F8C605E004CF32C /* StatusBarOverlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StatusBarOverlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CAB17F81F8C605E004CF32C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4CAB17FA1F8C605E004CF32C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4CAB17FD1F8C605E004CF32C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4CAB17FF1F8C605E004CF32C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4CAB18021F8C605E004CF32C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4CAB18041F8C605E004CF32C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewController.swift; sourceTree = "<group>"; };
+		4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusBarViewController.xib; sourceTree = "<group>"; };
+		4CAB18531F8C617D004CF32C /* StatusBarWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarWindow.swift; sourceTree = "<group>"; };
+		4CAB18571F8C75F9004CF32C /* StatusBarOverlay.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = StatusBarOverlay.podspec; path = ../../../StatusBarOverlay.podspec; sourceTree = "<group>"; };
+		4CAB18581F8C7603004CF32C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
+		732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusBarOverlay.release.xcconfig"; path = "Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay.release.xcconfig"; sourceTree = "<group>"; };
+		828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StatusBarOverlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDBE602E23AE48A321066A10 /* Pods-StatusBarOverlay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusBarOverlay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4CAB17F21F8C605E004CF32C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56FA26756A923B90E2F5FB80 /* Pods_StatusBarOverlay.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08E49B4E7B5791A5B1F552E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3D0BBE696BC42CFDEA251DC6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FDBE602E23AE48A321066A10 /* Pods-StatusBarOverlay.debug.xcconfig */,
+				732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4CAB17EC1F8C605E004CF32C = {
+			isa = PBXGroup;
+			children = (
+				4CAB17F71F8C605E004CF32C /* StatusBarOverlay */,
+				4CAB17F61F8C605E004CF32C /* Products */,
+				3D0BBE696BC42CFDEA251DC6 /* Pods */,
+				08E49B4E7B5791A5B1F552E8 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4CAB17F61F8C605E004CF32C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CAB17F51F8C605E004CF32C /* StatusBarOverlay.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4CAB17F71F8C605E004CF32C /* StatusBarOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				4CAB18501F8C617D004CF32C /* Sources */,
+				4CAB17F81F8C605E004CF32C /* AppDelegate.swift */,
+				4CAB17FA1F8C605E004CF32C /* ViewController.swift */,
+				4CAB17FC1F8C605E004CF32C /* Main.storyboard */,
+				4CAB17FF1F8C605E004CF32C /* Assets.xcassets */,
+				4CAB18011F8C605E004CF32C /* LaunchScreen.storyboard */,
+				4CAB18041F8C605E004CF32C /* Info.plist */,
+				4CAB18571F8C75F9004CF32C /* StatusBarOverlay.podspec */,
+				4CAB18581F8C7603004CF32C /* README.md */,
+			);
+			path = StatusBarOverlay;
+			sourceTree = "<group>";
+		};
+		4CAB18501F8C617D004CF32C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */,
+				4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */,
+				4CAB18531F8C617D004CF32C /* StatusBarWindow.swift */,
+			);
+			name = Sources;
+			path = ../../../Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4CAB17F41F8C605E004CF32C /* StatusBarOverlay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CAB18071F8C605E004CF32C /* Build configuration list for PBXNativeTarget "StatusBarOverlay" */;
+			buildPhases = (
+				EEA4BFBD9C1A7D06EB7858C5 /* [CP] Check Pods Manifest.lock */,
+				4CAB17F11F8C605E004CF32C /* Sources */,
+				4CAB17F21F8C605E004CF32C /* Frameworks */,
+				4CAB17F31F8C605E004CF32C /* Resources */,
+				4CAB183E1F8C6125004CF32C /* Embed Frameworks */,
+				C6F37DF6A9BA983131D7656F /* [CP] Embed Pods Frameworks */,
+				603B14B834C3F54F9A836020 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StatusBarOverlay;
+			productName = StatusBarOverlay;
+			productReference = 4CAB17F51F8C605E004CF32C /* StatusBarOverlay.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4CAB17ED1F8C605E004CF32C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = IdleHandsApps;
+				TargetAttributes = {
+					4CAB17F41F8C605E004CF32C = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4CAB17F01F8C605E004CF32C /* Build configuration list for PBXProject "StatusBarOverlay" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4CAB17EC1F8C605E004CF32C;
+			productRefGroup = 4CAB17F61F8C605E004CF32C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4CAB17F41F8C605E004CF32C /* StatusBarOverlay */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4CAB17F31F8C605E004CF32C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CAB18031F8C605E004CF32C /* LaunchScreen.storyboard in Resources */,
+				4CAB18001F8C605E004CF32C /* Assets.xcassets in Resources */,
+				4CAB17FE1F8C605E004CF32C /* Main.storyboard in Resources */,
+				4CAB18561F8C6209004CF32C /* StatusBarViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		603B14B834C3F54F9A836020 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6F37DF6A9BA983131D7656F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EEA4BFBD9C1A7D06EB7858C5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4CAB17F11F8C605E004CF32C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CAB18551F8C6202004CF32C /* StatusBarViewController.swift in Sources */,
+				4CAB18541F8C61FE004CF32C /* StatusBarWindow.swift in Sources */,
+				4CAB17FB1F8C605E004CF32C /* ViewController.swift in Sources */,
+				4CAB17F91F8C605E004CF32C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4CAB17FC1F8C605E004CF32C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CAB17FD1F8C605E004CF32C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4CAB18011F8C605E004CF32C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CAB18021F8C605E004CF32C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4CAB18051F8C605E004CF32C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4CAB18061F8C605E004CF32C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4CAB18081F8C605E004CF32C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FDBE602E23AE48A321066A10 /* Pods-StatusBarOverlay.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8PLGC4383C;
+				INFOPLIST_FILE = StatusBarOverlay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kegstar.StatusBarOverlay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4CAB18091F8C605E004CF32C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8PLGC4383C;
+				INFOPLIST_FILE = StatusBarOverlay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kegstar.StatusBarOverlay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4CAB17F01F8C605E004CF32C /* Build configuration list for PBXProject "StatusBarOverlay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CAB18051F8C605E004CF32C /* Debug */,
+				4CAB18061F8C605E004CF32C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CAB18071F8C605E004CF32C /* Build configuration list for PBXNativeTarget "StatusBarOverlay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CAB18081F8C605E004CF32C /* Debug */,
+				4CAB18091F8C605E004CF32C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4CAB17ED1F8C605E004CF32C /* Project object */;
+}
