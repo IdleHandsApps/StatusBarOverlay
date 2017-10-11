@@ -10,13 +10,21 @@ import UIKit
 
 class StatusBarViewController: UIViewController {
 
-    @IBOutlet var backgroundView: UIView!
-    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet private var statusBarView: UIView!
+    @IBOutlet private var statusBarNormalContainerView: UIView!
+    @IBOutlet private var statusBarNotchContainerView: UIView!
+    
+    @IBOutlet private var backgroundView: UIView!
+    @IBOutlet private var messageLabel: UILabel!
+    @IBOutlet private var statusBarLabel: UILabel!
+    @IBOutlet private var statusBarIcon: UIImageView!
+    @IBOutlet private var statusBarNotchLabel: UILabel!
+    @IBOutlet private var statusBarNotchIcon: UIImageView!
+    
     @IBOutlet var messageButton: UIButton!
     @IBOutlet var actionButton: UIButton!
     @IBOutlet var statusBarButton: UIButton!
-    @IBOutlet var statusBarLabel: UILabel!
-    @IBOutlet var noConnectionBarConstraintHeight: NSLayoutConstraint!
+    @IBOutlet var statusBarConstraintHeight: NSLayoutConstraint!
     
     var customStatusBarText: String?
     
@@ -27,6 +35,45 @@ class StatusBarViewController: UIViewController {
         self.messageButton.setBackgroundImage(StatusBarViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.selected)
         self.messageButton.setBackgroundImage(StatusBarViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.highlighted)
         self.actionButton.isHidden = true
+    }
+    
+    public func setHasNotch(_ hasNotch: Bool) {
+        self.statusBarNormalContainerView.isHidden = hasNotch
+        self.statusBarNotchContainerView.isHidden = !hasNotch
+    }
+    
+    public func setStatusBarFont(font: UIFont) {
+        self.statusBarLabel.font = font
+        self.statusBarNotchLabel.font = font
+    }
+    
+    public func setStatusBarTextColor(color: UIColor) {
+        self.statusBarLabel.textColor = color
+        self.statusBarNotchLabel.textColor = color
+        self.statusBarIcon.tintColor = color
+        self.statusBarNotchIcon.tintColor = color
+    }
+    
+    public func setStatusBarText(text: String?) {
+        self.statusBarLabel.text = text
+        self.statusBarNotchLabel.text = text
+    }
+    
+    public func setStatusBarBackgroundColor(color: UIColor) {
+        self.statusBarView.backgroundColor = color
+    }
+    
+    public func setStatusBarIcon(image: UIImage) {
+        self.statusBarIcon.image = image
+        self.statusBarNotchIcon.image = image
+    }
+    
+    public func setMessageBarText(text: String?) {
+        self.messageLabel.text = text
+    }
+    
+    public func setMessageBarBackgroundColor(color: UIColor) {
+        self.backgroundView.backgroundColor = color
     }
 
     class func imageWithColor(_ color: UIColor) -> UIImage {

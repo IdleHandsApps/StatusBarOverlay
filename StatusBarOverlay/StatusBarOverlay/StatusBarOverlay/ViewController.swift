@@ -19,6 +19,15 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         StatusBarOverlay.topViewController = self // so status bar can be updated at any time
+        
+        //StatusBarOverlay.showMessage(nil, animated: false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+
+        StatusBarOverlay.showMessage(nil, animated: false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

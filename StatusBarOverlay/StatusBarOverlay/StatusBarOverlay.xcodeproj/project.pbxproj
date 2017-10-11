@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C6C89E21F8D847E0064ED76 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C89E11F8D847E0064ED76 /* Media.xcassets */; };
 		4CAB17F91F8C605E004CF32C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB17F81F8C605E004CF32C /* AppDelegate.swift */; };
 		4CAB17FB1F8C605E004CF32C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB17FA1F8C605E004CF32C /* ViewController.swift */; };
 		4CAB17FE1F8C605E004CF32C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB17FC1F8C605E004CF32C /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4C6C89E11F8D847E0064ED76 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		4CAB17F51F8C605E004CF32C /* StatusBarOverlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StatusBarOverlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAB17F81F8C605E004CF32C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CAB17FA1F8C605E004CF32C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */,
 				4CAB18511F8C617D004CF32C /* StatusBarViewController.swift */,
 				4CAB18521F8C617D004CF32C /* StatusBarViewController.xib */,
+				4C6C89E11F8D847E0064ED76 /* Media.xcassets */,
 			);
 			name = Sources;
 			path = ../../../Sources;
@@ -186,6 +189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6C89E21F8D847E0064ED76 /* Media.xcassets in Resources */,
 				4CAB18031F8C605E004CF32C /* LaunchScreen.storyboard in Resources */,
 				4CAB18001F8C605E004CF32C /* Assets.xcassets in Resources */,
 				4CAB17FE1F8C605E004CF32C /* Main.storyboard in Resources */,
