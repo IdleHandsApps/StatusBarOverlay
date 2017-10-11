@@ -29,6 +29,8 @@ import Alamofire
     public static var defaultFont = UIFont.boldSystemFont(ofSize: 14)
     public static var defaultText = "No Internet Connection"
     public static var defaultNotchText = "No Data"
+    public static var customStatusBarText: String?
+    
     public static var host: String!
     public static var isReachable = true
     public static var preferredStatusBarStyle = UIStatusBarStyle.default
@@ -90,7 +92,7 @@ import Alamofire
     
     public class func setStatusBarText(_ statusBarText: String?, backgroundColor: UIColor?) {
         
-        StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: statusBarText)
+        StatusBarOverlay.customStatusBarText = statusBarText
         StatusBarOverlay.shared.statusBarViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
         StatusBarOverlay.shared.statusBarViewController?.setStatusBarBackgroundColor(color: backgroundColor != nil ? backgroundColor! : StatusBarOverlay.defaultBackgroundColor)
         
@@ -147,7 +149,7 @@ import Alamofire
         self.isHidden = false
         self.statusBarViewController?.setHasNotch(StatusBarOverlay.hasNotch())
         
-        if isReachable && StatusBarOverlay.shared.statusBarViewController?.customStatusBarText == nil {
+        if isReachable && StatusBarOverlay.customStatusBarText == nil {
             StatusBarOverlay.shared.statusBarViewController!.statusBarConstraintHeight.constant = 0
             if StatusBarOverlay.hasNotch() == false {
                 StatusBarOverlay.prefersStatusBarHidden = true
@@ -167,12 +169,13 @@ import Alamofire
         }
         else {
             StatusBarOverlay.shared.statusBarViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
+            StatusBarOverlay.shared.statusBarViewController?.setShowStatusBarIconHidden(isReachable)
             // set custom status bar text, if any
-            if StatusBarOverlay.shared.statusBarViewController?.customStatusBarText != nil && !isReachable {
-                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: (StatusBarOverlay.shared.statusBarViewController?.customStatusBarText)! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
+            if StatusBarOverlay.customStatusBarText != nil && !isReachable {
+                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
             }
-            else if StatusBarOverlay.shared.statusBarViewController?.customStatusBarText != nil {
-                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: StatusBarOverlay.shared.statusBarViewController?.customStatusBarText)
+            else if StatusBarOverlay.customStatusBarText != nil {
+                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText)
             }
             else {
                 StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch() ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
@@ -259,3 +262,4 @@ import Alamofire
         return hasNotch
     }
 }
+

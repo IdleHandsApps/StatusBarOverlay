@@ -10,26 +10,23 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        StatusBarOverlay.topViewController = self // so status bar can be updated at any time
-        
-        //StatusBarOverlay.showMessage(nil, animated: false)
+        // so status bar can be updated at any time
+        StatusBarOverlay.topViewController = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-
+        // TODO: I need to remove the necessity of this call
         StatusBarOverlay.showMessage(nil, animated: false)
     }
 
+    // MARK: UIViewController status bar methods
+    // Defer logic to StatusBarOverlay but override if needed
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return StatusBarOverlay.preferredStatusBarStyle
     }

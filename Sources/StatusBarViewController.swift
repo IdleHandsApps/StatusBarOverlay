@@ -9,7 +9,7 @@
 import UIKit
 
 class StatusBarViewController: UIViewController {
-
+    
     @IBOutlet private var statusBarView: UIView!
     @IBOutlet private var statusBarNormalContainerView: UIView!
     @IBOutlet private var statusBarNotchContainerView: UIView!
@@ -26,11 +26,9 @@ class StatusBarViewController: UIViewController {
     @IBOutlet var statusBarButton: UIButton!
     @IBOutlet var statusBarConstraintHeight: NSLayoutConstraint!
     
-    var customStatusBarText: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.messageButton.setBackgroundImage(StatusBarViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.selected)
         self.messageButton.setBackgroundImage(StatusBarViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.highlighted)
@@ -68,6 +66,11 @@ class StatusBarViewController: UIViewController {
         self.statusBarNotchIcon.image = image
     }
     
+    public func setShowStatusBarIconHidden(_ isHidden: Bool) {
+        self.statusBarIcon.isHidden = isHidden
+        self.statusBarNotchIcon.isHidden = isHidden
+    }
+    
     public func setMessageBarText(text: String?) {
         self.messageLabel.text = text
     }
@@ -75,7 +78,7 @@ class StatusBarViewController: UIViewController {
     public func setMessageBarBackgroundColor(color: UIColor) {
         self.backgroundView.backgroundColor = color
     }
-
+    
     class func imageWithColor(_ color: UIColor) -> UIImage {
         let rect: CGRect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
@@ -86,5 +89,6 @@ class StatusBarViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image
     }
-
+    
 }
+
