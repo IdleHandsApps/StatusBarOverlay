@@ -45,7 +45,7 @@
                                     <color key="textColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="highlightedColor" red="0.12156862765550613" green="0.12941177189350128" blue="0.14117647707462311" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X0T-Rc-BLF">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoWifi" translatesAutoresizingMaskIntoConstraints="NO" id="X0T-Rc-BLF">
                                     <rect key="frame" x="8" y="4" width="12" height="12"/>
                                     <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
@@ -76,7 +76,7 @@
                                     <color key="textColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="highlightedColor" red="0.1215686277" green="0.1294117719" blue="0.1411764771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D7b-kz-LHv">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoWifi" translatesAutoresizingMaskIntoConstraints="NO" id="D7b-kz-LHv">
                                     <rect key="frame" x="319" y="16" width="12" height="12"/>
                                     <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
@@ -148,19 +148,21 @@
                             <color key="textColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3W6-Kw-GG9">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Close" translatesAutoresizingMaskIntoConstraints="NO" id="3W6-Kw-GG9">
                             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                             <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="3W6-Kw-GG9" secondAttribute="height" multiplier="1:1" id="Mlu-am-WhR"/>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GG-bj-G7v">
-                            <rect key="frame" x="295" y="0.0" width="80" height="44"/>
+                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GG-bj-G7v">
+                            <rect key="frame" x="331" y="0.0" width="44" height="44"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="80" id="T4V-Wy-drt"/>
+                                <constraint firstAttribute="width" constant="44" id="T4V-Wy-drt"/>
                             </constraints>
                             <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                            <state key="normal" image="ArrowRight"/>
                         </button>
                     </subviews>
                     <constraints>
@@ -203,4 +205,9 @@
             <point key="canvasLocation" x="35.5" y="55"/>
         </view>
     </objects>
+    <resources>
+        <image name="ArrowRight" width="30" height="30"/>
+        <image name="Close" width="22" height="22"/>
+        <image name="NoWifi" width="40" height="33"/>
+    </resources>
 </document>
