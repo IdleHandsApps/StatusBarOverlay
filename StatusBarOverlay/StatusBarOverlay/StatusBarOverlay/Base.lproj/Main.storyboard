@@ -23,8 +23,45 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQP-iF-lDL">
                                 <rect key="frame" x="0.0" y="269" width="375" height="128"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXu-4l-X5v">
+                                        <rect key="frame" x="52.5" y="40" width="270" height="49"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prefers StatusBar Hidden" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sY2-ly-Yob">
+                                                <rect key="frame" x="0.0" y="14" width="223" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="4RN-le-OLZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gUh-Ao-qwj">
+                                                <rect key="frame" x="223" y="9" width="49" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="2pA-fA-S3k"/>
+                                                    <constraint firstAttribute="width" constant="47" id="VkT-IZ-0Fr"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="prefersHiddenChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="8Ki-5n-Vim"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="gUh-Ao-qwj" firstAttribute="leading" secondItem="sY2-ly-Yob" secondAttribute="trailing" id="0Cg-J4-cCv"/>
+                                            <constraint firstAttribute="width" constant="270" id="5BO-dU-4Qi"/>
+                                            <constraint firstAttribute="trailing" secondItem="gUh-Ao-qwj" secondAttribute="trailing" id="Bwz-JD-8Ds"/>
+                                            <constraint firstItem="gUh-Ao-qwj" firstAttribute="centerY" secondItem="sXu-4l-X5v" secondAttribute="centerY" id="PiB-y8-8nl"/>
+                                            <constraint firstAttribute="height" constant="49" id="aNe-Yl-9i8"/>
+                                            <constraint firstItem="sY2-ly-Yob" firstAttribute="leading" secondItem="sXu-4l-X5v" secondAttribute="leading" id="cEE-x7-1js"/>
+                                            <constraint firstItem="sY2-ly-Yob" firstAttribute="centerY" secondItem="sXu-4l-X5v" secondAttribute="centerY" id="pRB-Kt-qca"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="sXu-4l-X5v" firstAttribute="centerY" secondItem="zQP-iF-lDL" secondAttribute="centerY" id="IZF-n3-EN3"/>
+                                    <constraint firstItem="sXu-4l-X5v" firstAttribute="centerX" secondItem="zQP-iF-lDL" secondAttribute="centerX" id="WdK-QO-Gi3"/>
                                     <constraint firstAttribute="height" constant="128" id="ygS-yB-HbJ"/>
                                 </constraints>
                             </view>
@@ -36,6 +73,9 @@
                             <constraint firstAttribute="trailing" secondItem="zQP-iF-lDL" secondAttribute="trailing" id="Q5S-fX-F7J"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="prefersHiddenSwitch" destination="gUh-Ao-qwj" id="KnG-hM-UEV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

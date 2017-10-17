@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet var prefersHiddenSwitch: UISwitch!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -22,6 +24,12 @@ class ViewController: UIViewController {
         
         // TODO: I need to remove the necessity of this call
         StatusBarOverlay.showMessage(nil, animated: false)
+        
+        prefersHiddenSwitch.setOn(StatusBarOverlay.prefersStatusBarHidden, animated: false)
+    }
+    
+    @IBAction func prefersHiddenChanged(_ sender: UISwitch) {
+        StatusBarOverlay.prefersStatusBarHidden = prefersHiddenSwitch.isOn
     }
 
     // MARK: UIViewController status bar methods

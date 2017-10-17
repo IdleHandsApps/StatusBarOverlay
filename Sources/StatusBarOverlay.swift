@@ -16,7 +16,7 @@ import Alamofire
     fileprivate static var messageHandler:(() -> Void)?
     fileprivate static var actionHandler:(() -> Void)?
     
-    fileprivate var statusBarViewController:StatusBarViewController?
+    fileprivate var statusBarOverlayViewController:StatusBarOverlayViewController?
     fileprivate var reachability:NetworkReachabilityManager?
     
     private static let podBundle = Bundle(for: StatusBarOverlay.classForCoder())
@@ -33,9 +33,32 @@ import Alamofire
     
     public static var host: String!
     public static var isReachable = true
-    public static var preferredStatusBarStyle = UIStatusBarStyle.default
-    public static var prefersStatusBarHidden = false
-    public static var preferredStatusBarUpdateAnimation = UIStatusBarAnimation.none
+    public static var preferredStatusBarStyle = UIStatusBarStyle.default {
+        didSet {
+            StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
+    private static var prefersNoConnectionBarHidden = false {
+        didSet {
+            StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    private static var _prefersStatusBarHidden = false
+    public static var prefersStatusBarHidden: Bool {
+        get {
+            return _prefersStatusBarHidden && prefersNoConnectionBarHidden
+        }
+        set {
+            _prefersStatusBarHidden = newValue
+            StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    public static var preferredStatusBarUpdateAnimation = UIStatusBarAnimation.none {
+        didSet {
+            StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
     public static weak var topViewController: UIViewController?
     
     private init() {
@@ -53,28 +76,29 @@ import Alamofire
         
         assert(StatusBarOverlay.host != nil, "StatusBarOverlay.host must be set to your api path")
         
-        if let infoPlist = Bundle.main.infoDictionary {
-            if let statusBarHidden = infoPlist["UIStatusBarHidden"] as? Bool {
-                StatusBarOverlay.prefersStatusBarHidden = statusBarHidden
-            }
-            if let statusBarStyle = infoPlist["UIStatusBarStyle"] as? String {
-                if statusBarStyle == "UIStatusBarStyleLightContent" {
-                    StatusBarOverlay.preferredStatusBarStyle = .lightContent
-                }
-                else if statusBarStyle == "UIStatusBarStyleDefault" {
-                    StatusBarOverlay.preferredStatusBarStyle = .default
-                }
-            }
+        if let infoPlist = Bundle.main.infoDictionary, let statusBarHidden = infoPlist["UIStatusBarHidden"] as? Bool {
+            StatusBarOverlay.prefersStatusBarHidden = statusBarHidden
+        }
+        else {
+            StatusBarOverlay.prefersStatusBarHidden = false
+        }
+        
+        if let infoPlist = Bundle.main.infoDictionary, let statusBarStyle = infoPlist["UIStatusBarStyle"] as? String, statusBarStyle == "UIStatusBarStyleLightContent" {
+            StatusBarOverlay.preferredStatusBarStyle = .lightContent
+        }
+        else {
+            // UIStatusBarStyleDefault
+            StatusBarOverlay.preferredStatusBarStyle = .default
         }
         
         var frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 88)
-        self.statusBarViewController = StatusBarViewController(nibName: "StatusBarViewController", bundle: StatusBarOverlay.bundle)
-        self.statusBarViewController?.view.frame = frame
-        self.statusBarViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
-        self.statusBarViewController?.setStatusBarIcon(image: UIImage(named: "NoWifi", in: StatusBarOverlay.bundle, compatibleWith: nil)!)
+        self.statusBarOverlayViewController = StatusBarOverlayViewController(nibName: "StatusBarOverlayViewController", bundle: StatusBarOverlay.bundle)
+        self.statusBarOverlayViewController?.view.frame = frame
+        self.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
+        self.statusBarOverlayViewController?.setStatusBarIcon(image: UIImage(named: "NoWifi", in: StatusBarOverlay.bundle, compatibleWith: nil)!)
         
         self.windowLevel = UIWindowLevelStatusBar + 1
-        self.addSubview((self.statusBarViewController!.view)!)
+        self.addSubview((self.statusBarOverlayViewController!.view)!)
         
         frame.size.height = 0
         self.frame = frame
@@ -85,46 +109,39 @@ import Alamofire
         }
         self.reachability?.startListening()
         
-        self.statusBarViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControlEvents.touchUpInside)
-        self.statusBarViewController?.actionButton.addTarget(self, action: #selector(StatusBarOverlay.actionTapped(_:)), for: UIControlEvents.touchUpInside)
-        self.statusBarViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
+        self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControlEvents.touchUpInside)
+        self.statusBarOverlayViewController?.actionButton.addTarget(self, action: #selector(StatusBarOverlay.actionTapped(_:)), for: UIControlEvents.touchUpInside)
+        self.statusBarOverlayViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
+    }
+    
+    private class func setNeedsStatusBarAppearanceUpdate() {
+        UIView.animate(withDuration: 0.2, animations: {
+            StatusBarOverlay.topViewController?.setNeedsStatusBarAppearanceUpdate()
+            StatusBarOverlay.topViewController?.navigationController?.navigationBar.setNeedsLayout()
+            StatusBarOverlay.topViewController?.navigationController?.navigationBar.layoutIfNeeded()
+        })
     }
     
     public class func setStatusBarText(_ statusBarText: String?, backgroundColor: UIColor?) {
         
         StatusBarOverlay.customStatusBarText = statusBarText
-        StatusBarOverlay.shared.statusBarViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
-        StatusBarOverlay.shared.statusBarViewController?.setStatusBarBackgroundColor(color: backgroundColor != nil ? backgroundColor! : StatusBarOverlay.defaultBackgroundColor)
+        StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
+        StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: backgroundColor != nil ? backgroundColor! : StatusBarOverlay.defaultBackgroundColor)
         
         StatusBarOverlay.shared.updateIsReachable(StatusBarOverlay.isReachable, animated: StatusBarOverlay.isReachable)
     }
     
-    func networkStatusChanged(_ status: NetworkReachabilityManager.NetworkReachabilityStatus, animated: Bool) {
-        switch status {
-        case .notReachable:
-            StatusBarOverlay.shared.updateIsReachable(false, animated: animated)
-            break
-        case .reachable:
-            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
-            NotificationCenter.default.post(name: StatusBarOverlay.networkChangedToReachableNotification, object: nil)
-            break
-        case .unknown:
-            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
-            break
-        }
-    }
-    
     public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, actionName: String = "", actionHandler: (() -> Void)? = nil, messageHandler: (() -> Void)? = nil) {
         
-        StatusBarOverlay.shared.statusBarViewController?.actionButton.isHidden = actionName.characters.count == 0
-        StatusBarOverlay.shared.statusBarViewController?.actionButton.setTitle(actionName, for: .normal)
+        StatusBarOverlay.shared.statusBarOverlayViewController?.actionButton.isHidden = actionName.characters.count == 0
+        StatusBarOverlay.shared.statusBarOverlayViewController?.actionButton.setTitle(actionName, for: .normal)
         StatusBarOverlay.actionHandler = actionHandler
         StatusBarOverlay.messageHandler = messageHandler
         
-        StatusBarOverlay.shared.statusBarViewController?.setMessageBarText(text: message)
+        StatusBarOverlay.shared.statusBarOverlayViewController?.setMessageBarText(text: message)
         StatusBarOverlay.hasMessage = message != nil
         
-        StatusBarOverlay.shared.statusBarViewController?.setMessageBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
+        StatusBarOverlay.shared.statusBarOverlayViewController?.setMessageBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
         if let reachability = StatusBarOverlay.shared.reachability as NetworkReachabilityManager! {
             let status = reachability.networkReachabilityStatus
@@ -144,20 +161,52 @@ import Alamofire
         }
     }
     
+    public class func removeMessage() {
+        StatusBarOverlay.hasMessage = false
+        
+        if let reachability = StatusBarOverlay.shared.reachability as NetworkReachabilityManager! {
+            StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
+        }
+    }
+    
+    public class func hasNotch() -> Bool {
+        var hasNotch = false
+        if #available(iOS 11.0, *) {
+            if self.shared.safeAreaInsets != UIEdgeInsets.zero {
+                hasNotch = true
+            }
+        }
+        return hasNotch
+    }
+    
+    func networkStatusChanged(_ status: NetworkReachabilityManager.NetworkReachabilityStatus, animated: Bool) {
+        switch status {
+        case .notReachable:
+            StatusBarOverlay.shared.updateIsReachable(false, animated: animated)
+            break
+        case .reachable:
+            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
+            NotificationCenter.default.post(name: StatusBarOverlay.networkChangedToReachableNotification, object: nil)
+            break
+        case .unknown:
+            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
+            break
+        }
+    }
+    
     func updateIsReachable(_ isReachable: Bool, animated: Bool) {
         StatusBarOverlay.isReachable = isReachable
         self.isHidden = false
-        self.statusBarViewController?.setHasNotch(StatusBarOverlay.hasNotch())
+        self.statusBarOverlayViewController?.setHasNotch(StatusBarOverlay.hasNotch())
         
         if isReachable && StatusBarOverlay.customStatusBarText == nil {
-            StatusBarOverlay.shared.statusBarViewController!.statusBarConstraintHeight.constant = 0
+            StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = 0
             if StatusBarOverlay.hasNotch() == false {
-                StatusBarOverlay.prefersStatusBarHidden = true
+                StatusBarOverlay.prefersNoConnectionBarHidden = true
                 StatusBarOverlay.preferredStatusBarUpdateAnimation = animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none
                 UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
                     StatusBarOverlay.topViewController?.setNeedsStatusBarAppearanceUpdate()
                 })
-                //UIApplication.shared.setStatusBarHidden(true, with: animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none)
             }
             
             UIView.animate(withDuration: animated ? 0.3 : 0, animations: { () -> Void in
@@ -168,28 +217,27 @@ import Alamofire
             })
         }
         else {
-            StatusBarOverlay.shared.statusBarViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
-            StatusBarOverlay.shared.statusBarViewController?.setShowStatusBarIconHidden(isReachable)
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setShowStatusBarIconHidden(isReachable)
             // set custom status bar text, if any
             if StatusBarOverlay.customStatusBarText != nil && !isReachable {
-                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
+                StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
             }
             else if StatusBarOverlay.customStatusBarText != nil {
-                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText)
+                StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText)
             }
             else {
-                StatusBarOverlay.shared.statusBarViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch() ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
+                StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch() ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
             }
             
             let statusBarHeight: CGFloat = StatusBarOverlay.hasNotch() ? 44 :  20
             
-            StatusBarOverlay.shared.statusBarViewController!.statusBarConstraintHeight.constant = statusBarHeight
-            StatusBarOverlay.prefersStatusBarHidden = false
+            StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = statusBarHeight
+            StatusBarOverlay.prefersNoConnectionBarHidden = false
             StatusBarOverlay.preferredStatusBarUpdateAnimation = animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none
             UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
                 StatusBarOverlay.topViewController?.setNeedsStatusBarAppearanceUpdate()
             })
-            //UIApplication.shared.setStatusBarHidden(false, with: animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none)
             
             UIView.animate(withDuration: animated ? 0.3 : 0, animations: { () -> Void in
                 
@@ -220,14 +268,6 @@ import Alamofire
         StatusBarOverlay.removeMessage()
     }
     
-    public class func removeMessage() {
-        StatusBarOverlay.hasMessage = false
-        
-        if let reachability = StatusBarOverlay.shared.reachability as NetworkReachabilityManager! {
-            StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
-        }
-    }
-    
     @IBAction func statusBarTapped(_ sender: UIButton) {
         if let reachability = self.reachability as NetworkReachabilityManager! {
             StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
@@ -250,16 +290,6 @@ import Alamofire
         blue = max(min(1.0, blue), 0)
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
-    }
-    
-    public class func hasNotch() -> Bool {
-        var hasNotch = false
-        if #available(iOS 11.0, *) {
-            if self.shared.safeAreaInsets != UIEdgeInsets.zero {
-                hasNotch = true
-            }
-        }
-        return hasNotch
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  StatusBarViewController.swift
+//  StatusBarExtensions.swift
 //  StatusBarOverlay
 //
 //  Created by Fraser on 17/10/17.
@@ -8,8 +8,27 @@
 
 import UIKit
 
-public class StatusBarViewController: UIViewController {
+extension UINavigationController {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return StatusBarOverlay.preferredStatusBarStyle
+        }
+    }
+    
+    open override var prefersStatusBarHidden: Bool {
+        get {
+            return StatusBarOverlay.prefersStatusBarHidden
+        }
+    }
+    
+    open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        get {
+            return StatusBarOverlay.preferredStatusBarUpdateAnimation
+        }
+    }
+}
 
+extension UITabBarController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             return StatusBarOverlay.preferredStatusBarStyle

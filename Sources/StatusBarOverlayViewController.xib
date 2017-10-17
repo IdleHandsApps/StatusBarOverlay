@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StatusBarViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StatusBarOverlayViewController" customModule="StatusBarOverlay" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="7GG-bj-G7v" id="leR-GN-h9A"/>
                 <outlet property="backgroundView" destination="0PT-JF-SIi" id="bae-6e-2qx"/>
