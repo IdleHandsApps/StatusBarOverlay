@@ -12,8 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StatusBarOverlayViewController" customModule="StatusBarOverlay" customModuleProvider="target">
             <connections>
-                <outlet property="actionButton" destination="7GG-bj-G7v" id="leR-GN-h9A"/>
+                <outlet property="arrowImageView" destination="3W6-Kw-GG9" id="g4J-90-HPx"/>
                 <outlet property="backgroundView" destination="0PT-JF-SIi" id="bae-6e-2qx"/>
+                <outlet property="closeButton" destination="cVT-7P-s55" id="1Fs-OS-eBi"/>
                 <outlet property="messageButton" destination="4KR-zG-P3Y" id="FJc-HR-FW9"/>
                 <outlet property="messageLabel" destination="2hV-Ps-MUP" id="F75-Gy-sgA"/>
                 <outlet property="statusBarButton" destination="nhU-v1-zh7" id="EAP-0d-fu6"/>
@@ -125,7 +126,7 @@
                     <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4KR-zG-P3Y">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <rect key="frame" x="44" y="0.0" width="331" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="3qR-Ok-XeA"/>
                             </constraints>
@@ -148,45 +149,40 @@
                             <color key="textColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Close" translatesAutoresizingMaskIntoConstraints="NO" id="3W6-Kw-GG9">
+                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVT-7P-s55">
                             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="cVT-7P-s55" secondAttribute="height" multiplier="1:1" id="M4d-aG-M1U"/>
+                                <constraint firstAttribute="width" constant="44" id="ff1-zq-JMZ"/>
+                            </constraints>
+                            <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" image="Close"/>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="3W6-Kw-GG9">
+                            <rect key="frame" x="335" y="0.0" width="44" height="44"/>
                             <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="3W6-Kw-GG9" secondAttribute="height" multiplier="1:1" id="Mlu-am-WhR"/>
+                                <constraint firstAttribute="width" secondItem="3W6-Kw-GG9" secondAttribute="height" multiplier="1:1" id="yRu-1u-Z2E"/>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GG-bj-G7v">
-                            <rect key="frame" x="331" y="0.0" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="44" id="T4V-Wy-drt"/>
-                            </constraints>
-                            <color key="tintColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                            <state key="normal" image="ArrowRight"/>
-                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="7GG-bj-G7v" secondAttribute="trailing" id="6af-RM-xoF"/>
-                        <constraint firstAttribute="trailing" secondItem="3W6-Kw-GG9" secondAttribute="trailing" id="Inc-cv-QyL"/>
-                        <constraint firstItem="7GG-bj-G7v" firstAttribute="top" secondItem="X09-nk-eVg" secondAttribute="top" id="JdK-3p-AIb"/>
+                        <constraint firstAttribute="bottom" secondItem="cVT-7P-s55" secondAttribute="bottom" id="7PJ-2R-2kB"/>
+                        <constraint firstItem="cVT-7P-s55" firstAttribute="top" secondItem="X09-nk-eVg" secondAttribute="top" id="9la-GK-QGA"/>
+                        <constraint firstItem="cVT-7P-s55" firstAttribute="leading" secondItem="X09-nk-eVg" secondAttribute="leading" id="Bwg-3I-c0d"/>
+                        <constraint firstAttribute="trailing" secondItem="3W6-Kw-GG9" secondAttribute="trailing" constant="-4" id="IYO-ps-d9V"/>
                         <constraint firstAttribute="height" constant="44" id="LNw-sv-dFH"/>
-                        <constraint firstAttribute="bottom" secondItem="3W6-Kw-GG9" secondAttribute="bottom" id="Oac-Wf-PwM"/>
-                        <constraint firstItem="3W6-Kw-GG9" firstAttribute="top" secondItem="X09-nk-eVg" secondAttribute="top" id="Phl-Ws-fo7"/>
-                        <constraint firstItem="4KR-zG-P3Y" firstAttribute="leading" secondItem="X09-nk-eVg" secondAttribute="leading" id="QsE-Jl-DRT"/>
                         <constraint firstItem="2hV-Ps-MUP" firstAttribute="leading" secondItem="X09-nk-eVg" secondAttribute="leading" constant="44" id="TVO-fU-Q0A"/>
+                        <constraint firstAttribute="bottom" secondItem="3W6-Kw-GG9" secondAttribute="bottom" id="a6u-ZQ-9GA"/>
                         <constraint firstAttribute="trailing" secondItem="2hV-Ps-MUP" secondAttribute="trailing" constant="44" id="bMv-md-jGg"/>
-                        <constraint firstAttribute="bottom" secondItem="7GG-bj-G7v" secondAttribute="bottom" id="kJu-Qu-dBO"/>
                         <constraint firstAttribute="trailing" secondItem="4KR-zG-P3Y" secondAttribute="trailing" id="o9T-K0-EQf"/>
                         <constraint firstItem="2hV-Ps-MUP" firstAttribute="top" secondItem="X09-nk-eVg" secondAttribute="top" id="ong-SW-Ln2"/>
-                        <constraint firstItem="3W6-Kw-GG9" firstAttribute="leading" secondItem="X09-nk-eVg" secondAttribute="leading" id="rgX-CK-G52"/>
+                        <constraint firstItem="3W6-Kw-GG9" firstAttribute="top" secondItem="X09-nk-eVg" secondAttribute="top" id="vKW-5l-N8f"/>
+                        <constraint firstItem="4KR-zG-P3Y" firstAttribute="leading" secondItem="cVT-7P-s55" secondAttribute="trailing" id="wts-a9-tus"/>
                         <constraint firstItem="4KR-zG-P3Y" firstAttribute="top" secondItem="X09-nk-eVg" secondAttribute="top" id="ydf-45-1G4"/>
                         <constraint firstAttribute="bottom" secondItem="4KR-zG-P3Y" secondAttribute="bottom" id="zuN-09-ow1"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Inc-cv-QyL"/>
-                        </mask>
-                    </variation>
                 </view>
             </subviews>
             <constraints>
@@ -202,7 +198,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="35.5" y="55"/>
+            <point key="canvasLocation" x="92.5" y="51"/>
         </view>
     </objects>
     <resources>

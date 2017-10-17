@@ -40,6 +40,8 @@ class ViewController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool {
+        let hidden = StatusBarOverlay.prefersStatusBarHidden
+        print("prefersStatusBarHidden \(hidden)")
         return StatusBarOverlay.prefersStatusBarHidden
     }
     

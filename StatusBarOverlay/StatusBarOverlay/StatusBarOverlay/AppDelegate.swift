@@ -18,10 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // need to set StatusBarOverlay.host so network can be detected
         StatusBarOverlay.host = "example.com"
         
-        // If you app hides the status bar, you might want it to show just for devices with a notch, eg iPhone X
-        if StatusBarOverlay.hasNotch() {
-            StatusBarOverlay.prefersStatusBarHidden = false
-        }
+        // Set prefersStatusBarNotchHidden = true if you want prefersStatusBarHidden to also hide status bar for devices with a notch, eg iPhone X
+        StatusBarOverlay.prefersStatusBarNotchHidden = true
         
         return true
     }

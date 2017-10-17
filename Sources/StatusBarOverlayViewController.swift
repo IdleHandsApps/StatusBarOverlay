@@ -22,7 +22,8 @@ class StatusBarOverlayViewController: UIViewController {
     @IBOutlet private var statusBarNotchIcon: UIImageView!
     
     @IBOutlet var messageButton: UIButton!
-    @IBOutlet var actionButton: UIButton!
+    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var arrowImageView: UIImageView!
     @IBOutlet var statusBarButton: UIButton!
     @IBOutlet var statusBarConstraintHeight: NSLayoutConstraint!
     
@@ -32,7 +33,7 @@ class StatusBarOverlayViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.messageButton.setBackgroundImage(StatusBarOverlayViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.selected)
         self.messageButton.setBackgroundImage(StatusBarOverlayViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.highlighted)
-        self.actionButton.isHidden = true
+        self.arrowImageView.isHidden = true
     }
     
     public func setHasNotch(_ hasNotch: Bool) {

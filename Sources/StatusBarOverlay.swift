@@ -14,7 +14,6 @@ import Alamofire
     fileprivate static var shared = StatusBarOverlay()
     fileprivate static var hasMessage: Bool = false
     fileprivate static var messageHandler:(() -> Void)?
-    fileprivate static var actionHandler:(() -> Void)?
     
     fileprivate var statusBarOverlayViewController:StatusBarOverlayViewController?
     fileprivate var reachability:NetworkReachabilityManager?
@@ -44,13 +43,24 @@ import Alamofire
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
     }
+    // Set to true at app launch if you want prefersStatusBarHidden to also hide status bar for devices with a notch, eg iPhone X
+    // Keeping as false will keep status bar visible for devices with a notch, eg iPhone X
+    public static var prefersStatusBarNotchHidden = false {
+        didSet {
+            StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
     private static var _prefersStatusBarHidden = false
     public static var prefersStatusBarHidden: Bool {
         get {
-            return _prefersStatusBarHidden && prefersNoConnectionBarHidden
+            
+            print("get _prefersStatusBarHidden \(_prefersStatusBarHidden)")
+            print("get prefersNoConnectionBarHidden \(prefersNoConnectionBarHidden)")
+            return (StatusBarOverlay.hasNotch() == false || prefersStatusBarNotchHidden) && _prefersStatusBarHidden && prefersNoConnectionBarHidden
         }
         set {
             _prefersStatusBarHidden = newValue
+            print("set _prefersStatusBarHidden \(_prefersStatusBarHidden)")
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
     }
@@ -110,7 +120,7 @@ import Alamofire
         self.reachability?.startListening()
         
         self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControlEvents.touchUpInside)
-        self.statusBarOverlayViewController?.actionButton.addTarget(self, action: #selector(StatusBarOverlay.actionTapped(_:)), for: UIControlEvents.touchUpInside)
+        self.statusBarOverlayViewController?.closeButton.addTarget(self, action: #selector(StatusBarOverlay.closeTapped(_:)), for: UIControlEvents.touchUpInside)
         self.statusBarOverlayViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
     }
     
@@ -131,11 +141,9 @@ import Alamofire
         StatusBarOverlay.shared.updateIsReachable(StatusBarOverlay.isReachable, animated: StatusBarOverlay.isReachable)
     }
     
-    public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, actionName: String = "", actionHandler: (() -> Void)? = nil, messageHandler: (() -> Void)? = nil) {
+    public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, doShowArrow: Bool = false, messageHandler: (() -> Void)? = nil) {
         
-        StatusBarOverlay.shared.statusBarOverlayViewController?.actionButton.isHidden = actionName.characters.count == 0
-        StatusBarOverlay.shared.statusBarOverlayViewController?.actionButton.setTitle(actionName, for: .normal)
-        StatusBarOverlay.actionHandler = actionHandler
+        StatusBarOverlay.shared.statusBarOverlayViewController?.arrowImageView.isHidden = doShowArrow == false
         StatusBarOverlay.messageHandler = messageHandler
         
         StatusBarOverlay.shared.statusBarOverlayViewController?.setMessageBarText(text: message)
@@ -201,13 +209,12 @@ import Alamofire
         
         if isReachable && StatusBarOverlay.customStatusBarText == nil {
             StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = 0
-            if StatusBarOverlay.hasNotch() == false {
-                StatusBarOverlay.prefersNoConnectionBarHidden = true
-                StatusBarOverlay.preferredStatusBarUpdateAnimation = animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none
-                UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
-                    StatusBarOverlay.topViewController?.setNeedsStatusBarAppearanceUpdate()
-                })
-            }
+
+            StatusBarOverlay.prefersNoConnectionBarHidden = true
+            StatusBarOverlay.preferredStatusBarUpdateAnimation = animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none
+            UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
+                StatusBarOverlay.topViewController?.setNeedsStatusBarAppearanceUpdate()
+            })
             
             UIView.animate(withDuration: animated ? 0.3 : 0, animations: { () -> Void in
                 
@@ -249,22 +256,11 @@ import Alamofire
     }
     
     @IBAction func messageTapped(_ sender: UIButton) {
-        
-        if StatusBarOverlay.messageHandler != nil {
-            StatusBarOverlay.messageHandler!()
-        }
-        
+        StatusBarOverlay.messageHandler?()
         StatusBarOverlay.removeMessage()
     }
     
-    @IBAction func actionTapped(_ sender: UIButton) {
-        if StatusBarOverlay.actionHandler != nil {
-            StatusBarOverlay.actionHandler!()
-        }
-        else if StatusBarOverlay.messageHandler != nil {
-            StatusBarOverlay.messageHandler!()
-        }
-        
+    @IBAction func closeTapped(_ sender: UIButton) {
         StatusBarOverlay.removeMessage()
     }
     
