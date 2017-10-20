@@ -1,5 +1,5 @@
 <p align="center">
-
+  <img alt="StatusBarOverlay" src="https://github.com/IdleHandsApps/StatusBarOverlay/blob/master/StatusBarOverlay/StatusBarOverlay/StatusBarOverlay/Assets.xcassets/AppIcon.appiconset/Logo-76.png" />
 </p>
 
 StatusBarOverlay [![Language: Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org)
