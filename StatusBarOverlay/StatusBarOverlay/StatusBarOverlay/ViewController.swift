@@ -31,7 +31,9 @@ class ViewController: UIViewController {
     @IBAction func prefersHiddenChanged(_ sender: UISwitch) {
         StatusBarOverlay.prefersStatusBarHidden = prefersHiddenSwitch.isOn
     }
+}
 
+extension ViewController {
     // MARK: UIViewController status bar methods
     // Defer logic to StatusBarOverlay but override if needed
     
@@ -48,7 +50,5 @@ class ViewController: UIViewController {
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return StatusBarOverlay.preferredStatusBarUpdateAnimation
     }
-
-
 }
 

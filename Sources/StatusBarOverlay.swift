@@ -105,7 +105,10 @@ import Alamofire
         self.statusBarOverlayViewController = StatusBarOverlayViewController(nibName: "StatusBarOverlayViewController", bundle: StatusBarOverlay.bundle)
         self.statusBarOverlayViewController?.view.frame = frame
         self.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
-        self.statusBarOverlayViewController?.setStatusBarIcon(image: UIImage(named: "NoWifi", in: StatusBarOverlay.bundle, compatibleWith: nil)!)
+        
+        if let noWifi = UIImage(named: "NoWifi", in: StatusBarOverlay.bundle, compatibleWith: nil) {
+            self.statusBarOverlayViewController?.setStatusBarIcon(image: noWifi)
+        }
         
         self.windowLevel = UIWindowLevelStatusBar + 1
         self.addSubview((self.statusBarOverlayViewController!.view)!)
