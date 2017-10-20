@@ -27,30 +27,35 @@ pod 'StatusBarOverlay'
 
 ## How to use
 
-In your ```AppDelegate.didFinishLaunchingWithOptions()``` method you can call ```StatusBarOverlay.host = "example.com"``` with your server url. StatusBarOverlay will use this to check connectivity
-
 In your ```Info.plist``` file set ```UIViewControllerBasedStatusBarAppearance = true```
+
+In your ```AppDelegate.didFinishLaunchingWithOptions()``` method set ```StatusBarOverlay.host``` to your server domain. StatusBarOverlay will use this to check connectivity
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+  StatusBarOverlay.host = "example.com"
+        
+  return true
+}
+```
 
 If you use a common UIViewController subclass, add the following to it. All of view controllers show override these methods, so its best to use a common UIViewController subclass
 ```swift
-import UIKit
 import StatusBarOverlay // if StatusBarOverlay is in CocoaPod
 
 extension CommonViewController {
 
-override var preferredStatusBarStyle: UIStatusBarStyle {
-return StatusBarOverlay.preferredStatusBarStyle
-}
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return StatusBarOverlay.preferredStatusBarStyle
+  }
 
-override var prefersStatusBarHidden: Bool {
-let hidden = StatusBarOverlay.prefersStatusBarHidden
-print("prefersStatusBarHidden \(hidden)")
-return StatusBarOverlay.prefersStatusBarHidden
-}
+  override var prefersStatusBarHidden: Bool {
+    return StatusBarOverlay.prefersStatusBarHidden
+  }
 
-override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-return StatusBarOverlay.preferredStatusBarUpdateAnimation
-}
+  override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+    return StatusBarOverlay.preferredStatusBarUpdateAnimation
+  }
 }
 ```
 
@@ -69,7 +74,7 @@ https://github.com/IdleHandsApps/IHKeyboardAvoiding
 Button styles that are centralied and reusable, and hooked up to InterfaceBuilder
 https://github.com/IdleHandsApps/DesignableButton
 
-An easy way to make your NavBar transparent
+An extension to easily set your UINavigationBar transparent and hide the shadow
 https://github.com/IdleHandsApps/UINavigationBar-Transparent
 
 ## Author
