@@ -5,7 +5,7 @@
 StatusBarOverlay [![Language: Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org)
 ------------------------------
 
-
+![alt demo](https://github.com/IdleHandsApps/StatusBarOverlay/blob/files/StatusBarOverlayDemo.gif)
 
 StatusBarOverlay will automatically show a "No Internet Connection" bar when your app loses connection, and hide it again. It supports apps which hide the status bar and The Notch
 
