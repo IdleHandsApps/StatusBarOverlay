@@ -53,14 +53,10 @@ import Alamofire
     private static var _prefersStatusBarHidden = false
     public static var prefersStatusBarHidden: Bool {
         get {
-            
-            print("get _prefersStatusBarHidden \(_prefersStatusBarHidden)")
-            print("get prefersNoConnectionBarHidden \(prefersNoConnectionBarHidden)")
             return (StatusBarOverlay.hasNotch() == false || prefersStatusBarNotchHidden) && _prefersStatusBarHidden && prefersNoConnectionBarHidden
         }
         set {
             _prefersStatusBarHidden = newValue
-            print("set _prefersStatusBarHidden \(_prefersStatusBarHidden)")
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
     }
