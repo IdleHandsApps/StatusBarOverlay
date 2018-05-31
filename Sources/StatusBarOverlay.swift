@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SystemConfiguration
 
 @objc public class StatusBarOverlay: UIWindow {
     
@@ -30,9 +31,13 @@ import Alamofire
     public static var defaultNotchText = "No Data"
     public static var customStatusBarText: String?
     
-    public static var host: String!
+    @objc public static var host: String! {
+        didSet {
+            _ = self.shared // initialise
+        }
+    }
     public static var isReachable = true
-    public static var preferredStatusBarStyle = UIStatusBarStyle.default {
+    @objc public static var preferredStatusBarStyle = UIStatusBarStyle.default {
         didSet {
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
@@ -45,13 +50,13 @@ import Alamofire
     }
     // Set to true at app launch if you want prefersStatusBarHidden to also hide status bar for devices with a notch, eg iPhone X
     // Keeping as false will keep status bar visible for devices with a notch, eg iPhone X
-    public static var prefersStatusBarNotchHidden = false {
+    @objc public static var prefersStatusBarNotchHidden = false {
         didSet {
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
     }
     private static var _prefersStatusBarHidden = false
-    public static var prefersStatusBarHidden: Bool {
+    @objc public static var prefersStatusBarHidden: Bool {
         get {
             return (StatusBarOverlay.hasNotch() == false || prefersStatusBarNotchHidden) && _prefersStatusBarHidden && prefersNoConnectionBarHidden
         }
@@ -60,12 +65,12 @@ import Alamofire
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    public static var preferredStatusBarUpdateAnimation = UIStatusBarAnimation.none {
+    @objc public static var preferredStatusBarUpdateAnimation = UIStatusBarAnimation.none {
         didSet {
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    public static weak var topViewController: UIViewController?
+    @objc public static weak var topViewController: UIViewController?
     
     private init() {
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 88)
@@ -82,26 +87,12 @@ import Alamofire
         
         assert(StatusBarOverlay.host != nil, "StatusBarOverlay.host must be set to your api path")
         
-        if let infoPlist = Bundle.main.infoDictionary, let statusBarHidden = infoPlist["UIStatusBarHidden"] as? Bool {
-            StatusBarOverlay.prefersStatusBarHidden = statusBarHidden
-        }
-        else {
-            StatusBarOverlay.prefersStatusBarHidden = false
-        }
-        
-        if let infoPlist = Bundle.main.infoDictionary, let statusBarStyle = infoPlist["UIStatusBarStyle"] as? String, statusBarStyle == "UIStatusBarStyleLightContent" {
-            StatusBarOverlay.preferredStatusBarStyle = .lightContent
-        }
-        else {
-            // UIStatusBarStyleDefault
-            StatusBarOverlay.preferredStatusBarStyle = .default
-        }
+        StatusBarOverlay.setDefaultState()
         
         var frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 88)
         self.statusBarOverlayViewController = StatusBarOverlayViewController(nibName: "StatusBarOverlayViewController", bundle: StatusBarOverlay.bundle)
         self.statusBarOverlayViewController?.view.frame = frame
         self.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
-        
         if let noWifi = UIImage(named: "NoWifi", in: StatusBarOverlay.bundle, compatibleWith: nil) {
             self.statusBarOverlayViewController?.setStatusBarIcon(image: noWifi)
         }
@@ -121,6 +112,33 @@ import Alamofire
         self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControlEvents.touchUpInside)
         self.statusBarOverlayViewController?.closeButton.addTarget(self, action: #selector(StatusBarOverlay.closeTapped(_:)), for: UIControlEvents.touchUpInside)
         self.statusBarOverlayViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil,
+                                               queue: OperationQueue.main,
+                                               using: { (notification : Foundation.Notification!) -> Void in
+                                                if let reachability = StatusBarOverlay.shared.reachability {
+                                                    let status = reachability.networkReachabilityStatus
+                                                    StatusBarOverlay.shared.networkStatusChanged(status, animated: true)
+                                                }
+        })
+    }
+    
+    @objc public class func setDefaultState() {
+        if let infoPlist = Bundle.main.infoDictionary, let statusBarHidden = infoPlist["UIStatusBarHidden"] as? Bool {
+            StatusBarOverlay.prefersStatusBarHidden = statusBarHidden
+        }
+        else {
+            StatusBarOverlay.prefersStatusBarHidden = false
+        }
+        
+        if let infoPlist = Bundle.main.infoDictionary, let statusBarStyle = infoPlist["UIStatusBarStyle"] as? String, statusBarStyle == "UIStatusBarStyleLightContent" {
+            StatusBarOverlay.preferredStatusBarStyle = .lightContent
+        }
+        else {
+            // UIStatusBarStyleDefault
+            StatusBarOverlay.preferredStatusBarStyle = .default
+        }
     }
     
     private class func setNeedsStatusBarAppearanceUpdate() {
@@ -131,7 +149,7 @@ import Alamofire
         })
     }
     
-    public class func setStatusBarText(_ statusBarText: String?, backgroundColor: UIColor?) {
+    @objc public class func setStatusBarText(_ statusBarText: String?, backgroundColor: UIColor?) {
         
         StatusBarOverlay.customStatusBarText = statusBarText
         StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
@@ -140,7 +158,7 @@ import Alamofire
         StatusBarOverlay.shared.updateIsReachable(StatusBarOverlay.isReachable, animated: StatusBarOverlay.isReachable)
     }
     
-    public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, doShowArrow: Bool = false, messageHandler: (() -> Void)? = nil) {
+    @objc public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, doShowArrow: Bool = false, messageHandler: (() -> Void)? = nil) {
         
         StatusBarOverlay.shared.statusBarOverlayViewController?.arrowImageView.isHidden = doShowArrow == false
         StatusBarOverlay.messageHandler = messageHandler
@@ -150,7 +168,7 @@ import Alamofire
         
         StatusBarOverlay.shared.statusBarOverlayViewController?.setMessageBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
-        if let reachability = StatusBarOverlay.shared.reachability as NetworkReachabilityManager! {
+        if let reachability = StatusBarOverlay.shared.reachability {
             let status = reachability.networkReachabilityStatus
             StatusBarOverlay.shared.networkStatusChanged(status, animated: animated)
         }
@@ -168,15 +186,15 @@ import Alamofire
         }
     }
     
-    public class func removeMessage() {
+    @objc public class func removeMessage() {
         StatusBarOverlay.hasMessage = false
         
-        if let reachability = StatusBarOverlay.shared.reachability as NetworkReachabilityManager! {
+        if let reachability = StatusBarOverlay.shared.reachability {
             StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
         }
     }
     
-    public class func hasNotch() -> Bool {
+    @objc public class func hasNotch() -> Bool {
         var hasNotch = false
         if #available(iOS 11.0, *) {
             if self.shared.safeAreaInsets != UIEdgeInsets.zero {
@@ -188,7 +206,7 @@ import Alamofire
     
     func networkStatusChanged(_ status: NetworkReachabilityManager.NetworkReachabilityStatus, animated: Bool) {
         switch status {
-        case .notReachable:
+        case .notReachable where Reachability.isConnectedToNetwork() == false:
             StatusBarOverlay.shared.updateIsReachable(false, animated: animated)
             break
         case .reachable:
@@ -196,6 +214,9 @@ import Alamofire
             NotificationCenter.default.post(name: StatusBarOverlay.networkChangedToReachableNotification, object: nil)
             break
         case .unknown:
+            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
+            break
+        default:
             StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
             break
         }
@@ -208,7 +229,7 @@ import Alamofire
         
         if isReachable && StatusBarOverlay.customStatusBarText == nil {
             StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = 0
-
+            
             StatusBarOverlay.prefersNoConnectionBarHidden = true
             StatusBarOverlay.preferredStatusBarUpdateAnimation = animated ? UIStatusBarAnimation.slide : UIStatusBarAnimation.none
             UIView.animate(withDuration: animated ? 0.2 : 0, animations: {
@@ -264,7 +285,7 @@ import Alamofire
     }
     
     @IBAction func statusBarTapped(_ sender: UIButton) {
-        if let reachability = self.reachability as NetworkReachabilityManager! {
+        if let reachability = self.reachability {
             StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
         }
     }
@@ -286,5 +307,26 @@ import Alamofire
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }
+}
+
+public class Reachability {
+    
+    // backup check as AlamoFire has a bug
+    class func isConnectedToNetwork() -> Bool {
+        
+        var zeroAddress = sockaddr()
+        zeroAddress.sa_len = UInt8(MemoryLayout<sockaddr>.size)
+        zeroAddress.sa_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        }) else { return false }
+        
+        var flags = SCNetworkReachabilityFlags()
+        guard SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) else { return false }
+        
+        return flags.contains(.reachable) && !flags.contains(.connectionRequired)
+    }
+    
 }
 

@@ -2,3 +2,5 @@
 *.xcuserstate
 
 *.xcbkptlist
+
+StatusBarOverlay/StatusBarOverlay/StatusBarOverlay.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist

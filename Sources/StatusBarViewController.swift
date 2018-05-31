@@ -9,6 +9,12 @@
 import UIKit
 
 public class StatusBarViewController: UIViewController {
+    
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        StatusBarOverlay.topViewController = self
+    }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
