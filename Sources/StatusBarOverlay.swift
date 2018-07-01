@@ -24,12 +24,36 @@ import SystemConfiguration
     public static let bundle = StatusBarOverlay.bundleUrl != nil ? Bundle(url: StatusBarOverlay.bundleUrl!) : nil // set to use your own bundle
     
     public static let networkChangedToReachableNotification = Notification.Name(rawValue: "networkChangedToReachable")
-    public static var defaultBackgroundColor = UIColor.black
-    public static var defaultTextColor = UIColor.white
-    public static var defaultFont = UIFont.boldSystemFont(ofSize: 14)
-    public static var defaultText = "No Internet Connection"
-    public static var defaultNotchText = "No Data"
-    public static var customStatusBarText: String?
+    public static var defaultBackgroundColor = UIColor.black {
+        didSet {
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
+        }
+    }
+    public static var defaultTextColor = UIColor.white {
+        didSet {
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
+        }
+    }
+    public static var defaultFont = UIFont.boldSystemFont(ofSize: 14) {
+        didSet {
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
+        }
+    }
+    public static var defaultText = "No Internet Connection" {
+        didSet {
+            StatusBarOverlay.shared.updateStatusBarText(isReachable: true)
+        }
+    }
+    public static var defaultNotchText = "No Data" {
+        didSet {
+            StatusBarOverlay.shared.updateStatusBarText(isReachable: true)
+        }
+    }
+    public static var customStatusBarText: String? {
+        didSet {
+            StatusBarOverlay.shared.updateStatusBarText(isReachable: true)
+        }
+    }
     
     @objc public static var host: String! {
         didSet {
@@ -112,6 +136,9 @@ import SystemConfiguration
         self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControlEvents.touchUpInside)
         self.statusBarOverlayViewController?.closeButton.addTarget(self, action: #selector(StatusBarOverlay.closeTapped(_:)), for: UIControlEvents.touchUpInside)
         self.statusBarOverlayViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
+        
+        self.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
+        self.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil,
@@ -246,16 +273,7 @@ import SystemConfiguration
         else {
             StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
             StatusBarOverlay.shared.statusBarOverlayViewController?.setShowStatusBarIconHidden(isReachable)
-            // set custom status bar text, if any
-            if StatusBarOverlay.customStatusBarText != nil && !isReachable {
-                StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
-            }
-            else if StatusBarOverlay.customStatusBarText != nil {
-                StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText)
-            }
-            else {
-                StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch() ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
-            }
+            self.updateStatusBarText(isReachable: isReachable)
             
             let statusBarHeight: CGFloat = StatusBarOverlay.hasNotch() ? 44 :  20
             
@@ -272,6 +290,19 @@ import SystemConfiguration
                 self.frame = frame
                 self.layoutIfNeeded()
             })
+        }
+    }
+    
+    private func updateStatusBarText(isReachable: Bool) {
+        // set custom status bar text, if any
+        if StatusBarOverlay.customStatusBarText != nil && isReachable == false {
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
+        }
+        else if StatusBarOverlay.customStatusBarText != nil {
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText)
+        }
+        else {
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch() ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
         }
     }
     
