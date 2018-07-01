@@ -113,7 +113,7 @@ import SystemConfiguration
         
         StatusBarOverlay.setDefaultState()
         
-        var frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 88)
+        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 0)
         self.statusBarOverlayViewController = StatusBarOverlayViewController(nibName: "StatusBarOverlayViewController", bundle: StatusBarOverlay.bundle)
         self.statusBarOverlayViewController?.view.frame = frame
         self.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
@@ -122,9 +122,8 @@ import SystemConfiguration
         }
         
         self.windowLevel = UIWindowLevelStatusBar + 1
-        self.addSubview((self.statusBarOverlayViewController!.view)!)
+        self.rootViewController = self.statusBarOverlayViewController
         
-        frame.size.height = 0
         self.frame = frame
         
         self.reachability = NetworkReachabilityManager(host: StatusBarOverlay.host)
@@ -140,15 +139,22 @@ import SystemConfiguration
         self.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
         self.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground,
-                                               object: nil,
-                                               queue: OperationQueue.main,
-                                               using: { (notification : Foundation.Notification!) -> Void in
-                                                if let reachability = StatusBarOverlay.shared.reachability {
-                                                    let status = reachability.networkReachabilityStatus
-                                                    StatusBarOverlay.shared.networkStatusChanged(status, animated: true)
-                                                }
-        })
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main) { note in
+            if let reachability = StatusBarOverlay.shared.reachability {
+                let status = reachability.networkReachabilityStatus
+                StatusBarOverlay.shared.networkStatusChanged(status, animated: true)
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidChangeStatusBarFrame, object: nil, queue: OperationQueue.main) { [weak self] note in
+            DispatchQueue.main.async {
+                // update window frame
+                guard let strongSelf = self else { return }
+                var height: CGFloat = StatusBarOverlay.isReachable ? 0 : (StatusBarOverlay.hasNotch() ? 44 :  20)
+                height += StatusBarOverlay.hasMessage ? 44 : 0
+                strongSelf.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
+            }
+        }
     }
     
     @objc public class func setDefaultState() {
