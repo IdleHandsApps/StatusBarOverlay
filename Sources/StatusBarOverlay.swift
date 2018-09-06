@@ -58,6 +58,8 @@ import SystemConfiguration
     @objc public static var host: String! {
         didSet {
             _ = self.shared // initialise
+            // then set the correct state on launch
+            StatusBarOverlay.shared.networkStatusChanged(StatusBarOverlay.shared.reachability!.networkReachabilityStatus, animated: true)
         }
     }
     public static var isReachable = true
