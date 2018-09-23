@@ -123,7 +123,7 @@ import SystemConfiguration
             self.statusBarOverlayViewController?.setStatusBarIcon(image: noWifi)
         }
         
-        self.windowLevel = UIWindowLevelStatusBar + 1
+        self.windowLevel = UIWindow.Level.statusBar + 1
         self.rootViewController = self.statusBarOverlayViewController
         
         self.frame = frame
@@ -134,21 +134,21 @@ import SystemConfiguration
         }
         self.reachability?.startListening()
         
-        self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControlEvents.touchUpInside)
-        self.statusBarOverlayViewController?.closeButton.addTarget(self, action: #selector(StatusBarOverlay.closeTapped(_:)), for: UIControlEvents.touchUpInside)
-        self.statusBarOverlayViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControlEvents.touchUpInside)
+        self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControl.Event.touchUpInside)
+        self.statusBarOverlayViewController?.closeButton.addTarget(self, action: #selector(StatusBarOverlay.closeTapped(_:)), for: UIControl.Event.touchUpInside)
+        self.statusBarOverlayViewController?.statusBarButton.addTarget(self, action: #selector(StatusBarOverlay.statusBarTapped(_:)), for: UIControl.Event.touchUpInside)
         
         self.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
         self.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main) { note in
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { note in
             if let reachability = StatusBarOverlay.shared.reachability {
                 let status = reachability.networkReachabilityStatus
                 StatusBarOverlay.shared.networkStatusChanged(status, animated: true)
             }
         }
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidChangeStatusBarFrame, object: nil, queue: OperationQueue.main) { [weak self] note in
+        NotificationCenter.default.addObserver(forName: UIApplication.didChangeStatusBarFrameNotification, object: nil, queue: OperationQueue.main) { [weak self] note in
             DispatchQueue.main.async {
                 // update window frame
                 guard let strongSelf = self else { return }
