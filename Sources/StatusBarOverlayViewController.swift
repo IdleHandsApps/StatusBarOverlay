@@ -31,8 +31,8 @@ class StatusBarOverlayViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.messageButton.setBackgroundImage(StatusBarOverlayViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.selected)
-        self.messageButton.setBackgroundImage(StatusBarOverlayViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControlState.highlighted)
+        self.messageButton.setBackgroundImage(StatusBarOverlayViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControl.State.selected)
+        self.messageButton.setBackgroundImage(StatusBarOverlayViewController.imageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)), for: UIControl.State.highlighted)
         self.arrowImageView.isHidden = true
     }
     

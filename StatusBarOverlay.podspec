@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "StatusBarOverlay"
-  s.version          = "1.7"
+  s.version          = "1.8"
   s.summary          = "A Status Bar Overlay which will automatically display a No Connection message and can display custom messages too"
 
   s.description      = <<-DESC
@@ -13,6 +13,8 @@ Pod::Spec.new do |s|
   s.author           = { "Fraser Scott-Morrison" => "fraserscottmorrison@me.com" }
 
   s.ios.deployment_target = "8.0"
+
+  s.swift_version = "4.2"
 
   s.source           = { :git => "https://github.com/IdleHandsApps/StatusBarOverlay.git", :tag => s.version.to_s }
 
