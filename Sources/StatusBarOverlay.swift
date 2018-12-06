@@ -55,6 +55,8 @@ import SystemConfiguration
         }
     }
     
+    @objc public private(set) static var hasNotch = false
+    
     @objc public static var host: String! {
         didSet {
             _ = self.shared // initialise
@@ -84,7 +86,7 @@ import SystemConfiguration
     private static var _prefersStatusBarHidden = false
     @objc public static var prefersStatusBarHidden: Bool {
         get {
-            return (StatusBarOverlay.hasNotch() == false || prefersStatusBarNotchHidden) && _prefersStatusBarHidden && prefersNoConnectionBarHidden
+            return (StatusBarOverlay.hasNotch == false || prefersStatusBarNotchHidden) && _prefersStatusBarHidden && prefersNoConnectionBarHidden
         }
         set {
             _prefersStatusBarHidden = newValue
@@ -141,6 +143,17 @@ import SystemConfiguration
         self.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
         self.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
+        if #available(iOS 12.0, *) {
+            if self.safeAreaInsets != UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0) {
+                StatusBarOverlay.hasNotch = true
+            }
+        }
+        else if #available(iOS 11.0, *) {
+            if self.safeAreaInsets != UIEdgeInsets.zero {
+                StatusBarOverlay.hasNotch = true
+            }
+        }
+        
 
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { note in
             if let reachability = StatusBarOverlay.shared.reachability {
@@ -153,7 +166,7 @@ import SystemConfiguration
             DispatchQueue.main.async {
                 // update window frame
                 guard let strongSelf = self else { return }
-                var height: CGFloat = StatusBarOverlay.isReachable ? 0 : (StatusBarOverlay.hasNotch() ? 44 :  20)
+                var height: CGFloat = StatusBarOverlay.isReachable ? 0 : (StatusBarOverlay.hasNotch ? 44 :  20)
                 height += StatusBarOverlay.hasMessage ? 44 : 0
                 strongSelf.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height)
             }
@@ -230,21 +243,6 @@ import SystemConfiguration
         }
     }
     
-    @objc public class func hasNotch() -> Bool {
-        var hasNotch = false
-        if #available(iOS 12.0, *) {
-            if self.shared.safeAreaInsets != UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0) {
-                hasNotch = true
-            }
-        }
-        else if #available(iOS 11.0, *) {
-            if self.shared.safeAreaInsets != UIEdgeInsets.zero {
-                hasNotch = true
-            }
-        }
-        return hasNotch
-    }
-    
     func networkStatusChanged(_ status: NetworkReachabilityManager.NetworkReachabilityStatus, animated: Bool) {
         switch status {
         case .notReachable where Reachability.isConnectedToNetwork() == false:
@@ -266,7 +264,7 @@ import SystemConfiguration
     func updateIsReachable(_ isReachable: Bool, animated: Bool) {
         StatusBarOverlay.isReachable = isReachable
         self.isHidden = false
-        self.statusBarOverlayViewController?.setHasNotch(StatusBarOverlay.hasNotch())
+        self.statusBarOverlayViewController?.setHasNotch(StatusBarOverlay.hasNotch)
         
         if isReachable && StatusBarOverlay.customStatusBarText == nil {
             StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = 0
@@ -289,7 +287,7 @@ import SystemConfiguration
             StatusBarOverlay.shared.statusBarOverlayViewController?.setShowStatusBarIconHidden(isReachable)
             self.updateStatusBarText(isReachable: isReachable)
             
-            let statusBarHeight: CGFloat = StatusBarOverlay.hasNotch() ? 44 :  20
+            let statusBarHeight: CGFloat = StatusBarOverlay.hasNotch ? 44 :  20
             
             StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = statusBarHeight
             StatusBarOverlay.prefersNoConnectionBarHidden = false
@@ -310,13 +308,13 @@ import SystemConfiguration
     private func updateStatusBarText(isReachable: Bool) {
         // set custom status bar text, if any
         if StatusBarOverlay.customStatusBarText != nil && isReachable == false {
-            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch() ? "" : " - \(StatusBarOverlay.defaultText)"))
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText! + (StatusBarOverlay.hasNotch ? "" : " - \(StatusBarOverlay.defaultText)"))
         }
         else if StatusBarOverlay.customStatusBarText != nil {
             StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: StatusBarOverlay.customStatusBarText)
         }
         else {
-            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch() ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
+            StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarText(text: (StatusBarOverlay.hasNotch ? StatusBarOverlay.defaultNotchText : StatusBarOverlay.defaultText))
         }
     }
     
