@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class StatusBarViewController: UIViewController {
+open class StatusBarViewController: UIViewController {
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

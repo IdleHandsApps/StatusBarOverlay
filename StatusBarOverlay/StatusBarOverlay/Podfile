@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'StatusBarOverlay' do
     # swift
-    pod 'Alamofire', '~> 4.2' # https://github.com/Alamofire/Alamofire
+    pod 'ReachabilitySwift', '~> 4.3' # https://github.com/ashleymills/Reachability.swift
 end
 
 
@@ -17,7 +17,7 @@ post_install do |installer|
         if swift4.include?(target.name)
             swift_version = '4.0'
             else
-            swift_version = '3.2'
+            swift_version = '4.2'
         end
         
         target.build_configurations.each do |config|

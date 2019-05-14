@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Alamofire
 import SystemConfiguration
+import Reachability
 
 @objc public class StatusBarOverlay: UIWindow {
     
@@ -17,7 +17,7 @@ import SystemConfiguration
     fileprivate static var messageHandler:(() -> Void)?
     
     fileprivate var statusBarOverlayViewController:StatusBarOverlayViewController?
-    fileprivate var reachability:NetworkReachabilityManager?
+    fileprivate var reachability = Reachability()
     
     private static let podBundle = Bundle(for: StatusBarOverlay.classForCoder())
     private static let bundleUrl = StatusBarOverlay.podBundle.url(forResource: "StatusBarOverlay", withExtension: "bundle")
@@ -61,10 +61,13 @@ import SystemConfiguration
         didSet {
             _ = self.shared // initialise
             // then set the correct state on launch
-            StatusBarOverlay.shared.networkStatusChanged(StatusBarOverlay.shared.reachability!.networkReachabilityStatus, animated: true)
+            StatusBarOverlay.shared.update(isReachable: StatusBarOverlay.isReachable, animated: true)
         }
     }
-    public static var isReachable = true
+    public static var isReachable: Bool {
+        return self.shared.reachability?.connection != .none
+    }
+    
     @objc public static var preferredStatusBarStyle = UIStatusBarStyle.default {
         didSet {
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
@@ -130,11 +133,11 @@ import SystemConfiguration
         
         self.frame = frame
         
-        self.reachability = NetworkReachabilityManager(host: StatusBarOverlay.host)
+        /*self.reachability = NetworkReachabilityManager(host: StatusBarOverlay.host)
         self.reachability?.listener = {(status: NetworkReachabilityManager.NetworkReachabilityStatus) -> () in
             self.networkStatusChanged(status, animated: true)
         }
-        self.reachability?.startListening()
+        self.reachability?.startListening()*/
         
         self.statusBarOverlayViewController?.messageButton.addTarget(self, action: #selector(StatusBarOverlay.messageTapped(_:)), for: UIControl.Event.touchUpInside)
         self.statusBarOverlayViewController?.closeButton.addTarget(self, action: #selector(StatusBarOverlay.closeTapped(_:)), for: UIControl.Event.touchUpInside)
@@ -154,12 +157,21 @@ import SystemConfiguration
             }
         }
         
+        reachability?.whenReachable = { reachability in
+            StatusBarOverlay.shared.update(isReachable: true, animated: true)
+        }
+        reachability?.whenUnreachable = { _ in
+            StatusBarOverlay.shared.update(isReachable: false, animated: true)
+        }
+        
+        do {// Start the network status notifier
+            try self.reachability?.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
 
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { note in
-            if let reachability = StatusBarOverlay.shared.reachability {
-                let status = reachability.networkReachabilityStatus
-                StatusBarOverlay.shared.networkStatusChanged(status, animated: true)
-            }
+            StatusBarOverlay.shared.update(isReachable: StatusBarOverlay.isReachable, animated: true)
         }
         
         NotificationCenter.default.addObserver(forName: UIApplication.didChangeStatusBarFrameNotification, object: nil, queue: OperationQueue.main) { [weak self] note in
@@ -204,7 +216,7 @@ import SystemConfiguration
         StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
         StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: backgroundColor != nil ? backgroundColor! : StatusBarOverlay.defaultBackgroundColor)
         
-        StatusBarOverlay.shared.updateIsReachable(StatusBarOverlay.isReachable, animated: StatusBarOverlay.isReachable)
+        StatusBarOverlay.shared.update(isReachable: StatusBarOverlay.isReachable, animated: StatusBarOverlay.isReachable)
     }
     
     @objc public class func showMessage(_ message: String?, animated: Bool, duration: Double = 0, doShowArrow: Bool = false, messageHandler: (() -> Void)? = nil) {
@@ -217,10 +229,7 @@ import SystemConfiguration
         
         StatusBarOverlay.shared.statusBarOverlayViewController?.setMessageBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         
-        if let reachability = StatusBarOverlay.shared.reachability {
-            let status = reachability.networkReachabilityStatus
-            StatusBarOverlay.shared.networkStatusChanged(status, animated: animated)
-        }
+        StatusBarOverlay.shared.update(isReachable: StatusBarOverlay.isReachable, animated: animated)
         
         if duration > 0 {
             if #available(iOS 10.0, *) {
@@ -238,33 +247,16 @@ import SystemConfiguration
     @objc public class func removeMessage() {
         StatusBarOverlay.hasMessage = false
         
-        if let reachability = StatusBarOverlay.shared.reachability {
-            StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
-        }
+        StatusBarOverlay.shared.update(isReachable: StatusBarOverlay.isReachable, animated: true)
     }
     
-    func networkStatusChanged(_ status: NetworkReachabilityManager.NetworkReachabilityStatus, animated: Bool) {
-        switch status {
-        case .notReachable where Reachability.isConnectedToNetwork() == false:
-            StatusBarOverlay.shared.updateIsReachable(false, animated: animated)
-            break
-        case .reachable:
-            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
-            NotificationCenter.default.post(name: StatusBarOverlay.networkChangedToReachableNotification, object: nil)
-            break
-        case .unknown:
-            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
-            break
-        default:
-            StatusBarOverlay.shared.updateIsReachable(true, animated: animated)
-            break
-        }
-    }
-    
-    func updateIsReachable(_ isReachable: Bool, animated: Bool) {
-        StatusBarOverlay.isReachable = isReachable
+    func update(isReachable: Bool, animated: Bool) {
         self.isHidden = false
         self.statusBarOverlayViewController?.setHasNotch(StatusBarOverlay.hasNotch)
+        
+        if isReachable {
+            NotificationCenter.default.post(name: StatusBarOverlay.networkChangedToReachableNotification, object: nil)
+        }
         
         if isReachable && StatusBarOverlay.customStatusBarText == nil {
             StatusBarOverlay.shared.statusBarOverlayViewController!.statusBarConstraintHeight.constant = 0
@@ -328,9 +320,7 @@ import SystemConfiguration
     }
     
     @IBAction func statusBarTapped(_ sender: UIButton) {
-        if let reachability = self.reachability {
-            StatusBarOverlay.shared.networkStatusChanged(reachability.networkReachabilityStatus, animated: true)
-        }
+        StatusBarOverlay.shared.update(isReachable: StatusBarOverlay.isReachable, animated: true)
     }
     
     class func getDarkenedColor(_ color: UIColor?) -> UIColor {
@@ -352,7 +342,7 @@ import SystemConfiguration
     }
 }
 
-public class Reachability {
+/*public class MyReachability {
     
     // backup check as AlamoFire has a bug
     class func isConnectedToNetwork() -> Bool {
@@ -370,6 +360,5 @@ public class Reachability {
         
         return flags.contains(.reachable) && !flags.contains(.connectionRequired)
     }
-    
-}
+}*/
 
