@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "StatusBarOverlay"
-  s.version          = "2.0"
+  s.version          = "2.1"
   s.summary          = "A Status Bar Overlay which will automatically display a No Connection message and can display custom messages too"
 
   s.description      = <<-DESC
