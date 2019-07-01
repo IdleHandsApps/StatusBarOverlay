@@ -6,22 +6,11 @@ target 'StatusBarOverlay' do
     pod 'ReachabilitySwift', '~> 4.3' # https://github.com/ashleymills/Reachability.swift
 end
 
-
-swift4 = []
-
 post_install do |installer|
     installer.pods_project.targets.each do |target|
-        
-        swift_version = nil
-        
-        if swift4.include?(target.name)
-            swift_version = '4.0'
-            else
-            swift_version = '4.2'
-        end
-        
+      
         target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = swift_version
+            config.build_settings['SWIFT_VERSION'] = '4.2'
         end
     end
 end
