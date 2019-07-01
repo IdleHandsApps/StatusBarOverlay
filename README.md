@@ -68,14 +68,14 @@ On the simulator sometimes the hiding event isnt fired. All devices work normall
 
 ## Get these while stocks last :)
 
+A Codable extension to decode arrays and to catch & log all decoding failures
+https://github.com/IdleHandsApps/SafeDecoder
+
 An elegant solution for keeping views visible when the keyboard is being shown
 https://github.com/IdleHandsApps/IHKeyboardAvoiding
 
 Button styles that are centralied and reusable, and hooked up to InterfaceBuilder
 https://github.com/IdleHandsApps/DesignableButton
-
-An extension to easily set your UINavigationBar transparent and hide the shadow
-https://github.com/IdleHandsApps/UINavigationBar-Transparent
 
 ## Author
 
