@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,7 @@
 		4CAB18541F8C61FE004CF32C /* StatusBarOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB18531F8C617D004CF32C /* StatusBarOverlay.swift */; };
 		4CAB18561F8C6209004CF32C /* StatusBarOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB18521F8C617D004CF32C /* StatusBarOverlayViewController.xib */; };
 		4CED392A1F95B10E00A7E694 /* StatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CED39291F95B10E00A7E694 /* StatusBarViewController.swift */; };
-		56FA26756A923B90E2F5FB80 /* Pods_StatusBarOverlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */; };
+		4CED8F1124C535FB00D91E4D /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4CED8F1024C535FB00D91E4D /* Reachability */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,9 +50,6 @@
 		4CAB18571F8C75F9004CF32C /* StatusBarOverlay.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = StatusBarOverlay.podspec; path = ../../../StatusBarOverlay.podspec; sourceTree = "<group>"; };
 		4CAB18581F8C7603004CF32C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
 		4CED39291F95B10E00A7E694 /* StatusBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewController.swift; sourceTree = "<group>"; };
-		732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusBarOverlay.release.xcconfig"; path = "Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay.release.xcconfig"; sourceTree = "<group>"; };
-		828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StatusBarOverlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FDBE602E23AE48A321066A10 /* Pods-StatusBarOverlay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusBarOverlay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,37 +57,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56FA26756A923B90E2F5FB80 /* Pods_StatusBarOverlay.framework in Frameworks */,
+				4CED8F1124C535FB00D91E4D /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08E49B4E7B5791A5B1F552E8 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				828ECE9325EC87CCA78DC2F2 /* Pods_StatusBarOverlay.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3D0BBE696BC42CFDEA251DC6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				FDBE602E23AE48A321066A10 /* Pods-StatusBarOverlay.debug.xcconfig */,
-				732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		4CAB17EC1F8C605E004CF32C = {
 			isa = PBXGroup;
 			children = (
 				4CAB17F71F8C605E004CF32C /* StatusBarOverlay */,
 				4CAB17F61F8C605E004CF32C /* Products */,
-				3D0BBE696BC42CFDEA251DC6 /* Pods */,
-				08E49B4E7B5791A5B1F552E8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,18 +117,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4CAB18071F8C605E004CF32C /* Build configuration list for PBXNativeTarget "StatusBarOverlay" */;
 			buildPhases = (
-				EEA4BFBD9C1A7D06EB7858C5 /* [CP] Check Pods Manifest.lock */,
 				4CAB17F11F8C605E004CF32C /* Sources */,
 				4CAB17F21F8C605E004CF32C /* Frameworks */,
 				4CAB17F31F8C605E004CF32C /* Resources */,
 				4CAB183E1F8C6125004CF32C /* Embed Frameworks */,
-				C6F37DF6A9BA983131D7656F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = StatusBarOverlay;
+			packageProductDependencies = (
+				4CED8F1024C535FB00D91E4D /* Reachability */,
+			);
 			productName = StatusBarOverlay;
 			productReference = 4CAB17F51F8C605E004CF32C /* StatusBarOverlay.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +160,9 @@
 				Base,
 			);
 			mainGroup = 4CAB17EC1F8C605E004CF32C;
+			packageReferences = (
+				4CED8F0F24C535FB00D91E4D /* XCRemoteSwiftPackageReference "Reachability.swift" */,
+			);
 			productRefGroup = 4CAB17F61F8C605E004CF32C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -204,45 +186,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		C6F37DF6A9BA983131D7656F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StatusBarOverlay/Pods-StatusBarOverlay-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EEA4BFBD9C1A7D06EB7858C5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-StatusBarOverlay-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4CAB17F11F8C605E004CF32C /* Sources */ = {
@@ -386,21 +329,24 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		4CAB18081F8C605E004CF32C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FDBE602E23AE48A321066A10 /* Pods-StatusBarOverlay.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8PLGC4383C;
 				INFOPLIST_FILE = StatusBarOverlay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kegstar.StatusBarOverlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -410,14 +356,16 @@
 		};
 		4CAB18091F8C605E004CF32C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 732100C9A38DDDB3CE11B048 /* Pods-StatusBarOverlay.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8PLGC4383C;
 				INFOPLIST_FILE = StatusBarOverlay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kegstar.StatusBarOverlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -447,6 +395,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4CED8F0F24C535FB00D91E4D /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4CED8F1024C535FB00D91E4D /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CED8F0F24C535FB00D91E4D /* XCRemoteSwiftPackageReference "Reachability.swift" */;
+			productName = Reachability;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4CAB17ED1F8C605E004CF32C /* Project object */;
 }

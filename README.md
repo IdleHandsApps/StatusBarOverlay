@@ -64,7 +64,7 @@ On the simulator sometimes the hiding event isnt fired. All devices work normall
 
 ## Dependencies
 
-* Alamofire is required for the connectivity events
+* Reachability is required for the connectivity events
 
 ## Get these while stocks last :)
 

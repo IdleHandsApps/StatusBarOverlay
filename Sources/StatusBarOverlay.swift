@@ -17,7 +17,7 @@ import Reachability
     fileprivate static var messageHandler:(() -> Void)?
     
     fileprivate var statusBarOverlayViewController:StatusBarOverlayViewController?
-    fileprivate var reachability = Reachability()
+    fileprivate var reachability = try? Reachability()
     
     private static let podBundle = Bundle(for: StatusBarOverlay.classForCoder())
     private static let bundleUrl = StatusBarOverlay.podBundle.url(forResource: "StatusBarOverlay", withExtension: "bundle")
@@ -65,7 +65,7 @@ import Reachability
         }
     }
     public static var isReachable: Bool {
-        return self.shared.reachability?.connection != .none
+        return self.shared.reachability?.connection != Reachability.Connection.unavailable
     }
     
     @objc public static var preferredStatusBarStyle = UIStatusBarStyle.default {
@@ -344,7 +344,7 @@ import Reachability
 
 /*public class MyReachability {
     
-    // backup check as AlamoFire has a bug
+    // backup check
     class func isConnectedToNetwork() -> Bool {
         
         var zeroAddress = sockaddr()

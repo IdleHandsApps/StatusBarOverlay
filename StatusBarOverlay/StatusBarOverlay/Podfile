@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'StatusBarOverlay' do
     # swift
-    pod 'ReachabilitySwift', '~> 4.3' # https://github.com/ashleymills/Reachability.swift
+    pod 'ReachabilitySwift', '~> 5.0.0' # https://github.com/ashleymills/Reachability.swift
 end
 
 post_install do |installer|

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "StatusBarOverlay"
-  s.version          = "2.2"
+  s.version          = "3.0"
   s.summary          = "A Status Bar Overlay which will automatically display a No Connection message and can display custom messages too"
 
   s.description      = <<-DESC
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/IdleHandsApps/StatusBarOverlay.git", :tag => s.version.to_s }
 
   s.source_files = "Sources/*.swift"
-  s.dependency  'ReachabilitySwift', '~> 4.3'
+  s.dependency  'ReachabilitySwift', '~> 5.0.0'
   s.resource_bundles = { 'StatusBarOverlay' => ["Sources/*.xib", "Sources/*.xcassets"] }
 
   s.framework       = "UIKit"
