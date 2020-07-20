@@ -16,7 +16,7 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "StatusBarOverlay", dependencies: ["Reachability"])
+        .target(name: "StatusBarOverlay", dependencies: ["Reachability"], path: "Sources")
     ],
     swiftLanguageVersions: [.v5]
 )
